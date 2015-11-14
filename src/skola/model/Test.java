@@ -11,96 +11,96 @@ import org.hibernate.cfg.Configuration;
 public class Test {
 
 	public static void main(String[] args) {
-		
-		
+
+
 		Trener trener1= new Trener();
 		Trener trener2 = new Trener();
 		Trener trener3= new Trener();
-		
+
 		Clan clan;
-		
+
 		Sala sala1 = new Sala();
 		Sala sala2 = new Sala();
-		
+
 		trener1.setImeIPrezime("Milan Milovic");
 		trener1.setBrojTelefona("0216212188");
-		
+
 		trener2.setImeIPrezime("Nikola Rasic");
 		trener2.setBrojTelefona("0113112321");
-		
+
 		trener3.setImeIPrezime("Petar Borak");
 		trener3.setBrojTelefona("0644238421");
-		
-		
-		
+
+
+
 		Termin termin1 = new Termin();
 		Termin termin2 = new Termin();
 		Termin termin3 = new Termin();
 		Termin termin4 = new Termin();
-		
-		
-		
-		
+
+
+
+
 		Grupa pioniri = new Grupa();
 		Grupa kadeti = new Grupa();
 		Grupa juniori = new Grupa();
-		
+
 		Grupa pioniri2 = new Grupa();
 		Grupa kadeti2 = new Grupa();
 		Grupa juniori2 = new Grupa();
-		
+
 		pioniri.setNaziv("Pioniri");
 		pioniri.setTrener(trener1);
-		
+
 		kadeti.setNaziv("Kadeti");
 		kadeti.setTrener(trener2);
-		
+
 		juniori.setNaziv("Juniori");
 		juniori.setTrener(trener3);
-		
+
 		pioniri2.setNaziv("Pioniri 2");
 		pioniri2.setTrener(trener1);
-		
+
 		kadeti2.setNaziv("Kadeti 2");
 		kadeti2.setTrener(trener2);
-		
+
 		juniori2.setNaziv("Juniori 2");
 		juniori2.setTrener(trener3);
-//		
+//
 //
 //		trener1.getGrupe().add(pioniri);
 //		trener2.getGrupe().add(kadeti);
 //		trener3.getGrupe().add(juniori);
-//		
+//
 //		trener1.getGrupe().add(pioniri2);
 //		trener2.getGrupe().add(kadeti2);
 //		trener3.getGrupe().add(juniori2);
-//		
+//
 		sala1.setNaziv("OS Vuk Karadzic");
 		sala2.setNaziv("OS Jovan Ducic");
-		
+
 		termin1.setGrupa(pioniri);
 		termin1.setSala(sala1);
 		termin1.setPocetak(new Date());
-		
+
 		termin2.setGrupa(juniori);
 		termin2.setSala(sala2);
 		termin2.setPocetak(new Date());
-		
+
 		termin3.setGrupa(kadeti2);
 		termin3.setSala(sala2);
 		termin3.setPocetak(new Date());
-		
+
 		termin4.setGrupa(pioniri2);
 		termin4.setSala(sala2);
 		termin4.setPocetak(new Date());
-		
+
 		sala1.getTerminiUSali().add(termin1);
 		sala1.getTerminiUSali().add(termin2);
-		
+
 		sala2.getTerminiUSali().add(termin3);
 		sala2.getTerminiUSali().add(termin4);
-		
+
 //		sesija.beginTransaction();
 
 		Trener[] treneri={trener1,trener2,trener3};
@@ -116,12 +116,13 @@ public class Test {
 		/*
 		sesija.save(sala1);
 		sesija.save(sala2);
-		
+
 		sesija.save(termin1);
 		sesija.save(termin2);
 		sesija.save(termin3);
 		sesija.save(termin4);
-		
+		*/
+		Session sesija=HibernateSetup.novaSesija();
 		for(int i=0; i<5;i++)
 		{
 			clan = new Clan();
@@ -132,7 +133,7 @@ public class Test {
 			pioniri.getClanovi().add(clan);
 			sesija.save(clan);
 		}
-		
+
 		for(int i=5; i<10;i++)
 		{
 			clan = new Clan();
@@ -143,7 +144,7 @@ public class Test {
 			kadeti.getClanovi().add(clan);
 			sesija.save(clan);
 		}
-		
+
 		for(int i=10; i<15;i++)
 		{
 			clan = new Clan();
@@ -165,7 +166,7 @@ public class Test {
 			pioniri2.getClanovi().add(clan);
 			sesija.save(clan);
 		}
-		
+
 		for(int i=20; i<25;i++)
 		{
 			clan = new Clan();
@@ -176,7 +177,7 @@ public class Test {
 			kadeti2.getClanovi().add(clan);
 			sesija.save(clan);
 		}
-		
+
 		for(int i=25; i<30;i++)
 		{
 			clan = new Clan();
@@ -190,12 +191,12 @@ public class Test {
 
 
 
-		
-		
-		
+
+
+
 //		sesija.getTransaction().commit();
-		sesija.close();
-		
+		HibernateSetup.zatvoriSesiju(sesija);
+
 		Session sesija2=HibernateSetup.novaSesija();
 		sesija2.getTransaction().begin();
 //		List<Clan> clanovi=sesija2.createCriteria(Clan.class).list();
@@ -209,12 +210,12 @@ public class Test {
 //			System.out.println("Grupa: "+group);
 //			System.out.println("Clanova: "+group.getClanovi().size());
 //		}
-		
+/*
 		List<Trener> treneri=sesija2.createCriteria(Trener.class).list();
 		sesija2.getTransaction().commit();
-		
+
 		sesija2.close();
-		
+
 		for(Trener tren : treneri){
 			System.out.println("--Trener: "+tren);
 			System.out.println("clanovi koje trenira: ");
@@ -229,7 +230,7 @@ public class Test {
 		for(Trener a : HibernateSetup.sviTreneri()){
 			System.out.println(a);
 		}
-		
+
 		System.out.println("Trener imena Petar Borak 2: "+HibernateSetup.trenerPoImenu("petar borak 2"));
 		System.out.println("Grupe trenera 1: ");
 		for(Grupa a : HibernateSetup.grupeTrenera(trener1.getImeIPrezime()))
@@ -238,7 +239,7 @@ public class Test {
 		for(Grupa a : HibernateSetup.sveGrupe())
 			System.out.println(a);
 		HibernateSetup.close();
-		
+
 	}
 
 }

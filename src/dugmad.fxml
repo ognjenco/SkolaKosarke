@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+   <children>
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Treneri" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Grupe" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Clanovi" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Sale" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Termini" />
+   </children>
+</VBox>

@@ -21,7 +21,7 @@ public class HibernateSetup {
 		conf.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		conf.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		File tren=new File(".");
-		String putanja=tren.getAbsolutePath()+File.separator+"nova";
+		String putanja=tren.getAbsoluteFile().getParent()+File.separator+"nova";
 		conf.setProperty("hibernate.connection.url", "jdbc:h2:"+putanja);
 		conf.setProperty("hibernate.connection.username", "ognjen");
 		conf.setProperty("hibernate.connection.password", "");
@@ -112,6 +112,13 @@ public class HibernateSetup {
 		List<Grupa> sve=s.createCriteria(Grupa.class).list();
 		zatvoriSesiju(s);
 		return sve.toArray(new Grupa[]{});
+	}
+
+	public static Clan[] sviClanovi(){
+		Session s=novaSesija();
+		List<Clan> svi=s.createCriteria(Clan.class).list();
+		zatvoriSesiju(s);
+		return svi.toArray(new Clan[]{});
 	}
 	public static void close(){
 		if(sessionFactory!=null)
