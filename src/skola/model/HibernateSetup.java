@@ -1,5 +1,6 @@
 package skola.model;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -13,13 +14,15 @@ import org.hibernate.criterion.Restrictions;
 
 public class HibernateSetup {
 	private static SessionFactory sessionFactory;
-	
+
 	 static{
-		 System.out.println("U statiku");
+
 		Configuration conf=new Configuration();
 		conf.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		conf.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
-		conf.setProperty("hibernate.connection.url", "jdbc:h2:~/nova");
+		File tren=new File(".");
+		String putanja=tren.getAbsolutePath()+File.separator+"nova";
+		conf.setProperty("hibernate.connection.url", "jdbc:h2:"+putanja);
 		conf.setProperty("hibernate.connection.username", "ognjen");
 		conf.setProperty("hibernate.connection.password", "");
 		conf.setProperty("hibernate.hbm2ddl.auto", "update");
@@ -27,10 +30,24 @@ public class HibernateSetup {
 		conf.addAnnotatedClass(Clan.class).addAnnotatedClass(Clanarina.class).addAnnotatedClass(Grupa.class);
 		conf.addAnnotatedClass(Sala.class).addAnnotatedClass(Termin.class).addAnnotatedClass(Trener.class);
 		sessionFactory=conf.buildSessionFactory();
-		
+
 	}
-	private static Session novaSesija(){
-		return sessionFactory.openSession();
+	public static Session novaSesija(){
+		Session sesija=sessionFactory.openSession();
+		sesija.beginTransaction();
+		return sesija;
+	}
+
+	public static void zatvoriSesiju(Session s){
+		try{
+		s.getTransaction().commit();
+		}
+		catch(Exception e){
+
+		}
+		finally{
+			s.close();
+		}
 	}
 	public static int dodajTrenera(Trener novi){
 		Session s=novaSesija();
@@ -39,17 +56,15 @@ public class HibernateSetup {
 			s.close();
 			return -1;
 		}
-		s.getTransaction().begin();
 		Integer broj=(Integer)s.save(novi);
-		s.getTransaction().commit();
-		s.close();
+		zatvoriSesiju(s);
 		return broj;
 	}
 	public static Trener[] sviTreneri(){
 		Session s=novaSesija();
 		List<Trener> svi=s.createCriteria(Trener.class).list();
-		s.close();
-		
+		zatvoriSesiju(s);
+
 		return svi.toArray(new Trener[]{});
 	}
 	public static Trener trenerPoImenu(String imeIPrezime){
@@ -62,7 +77,7 @@ public class HibernateSetup {
 			s.close();
 			return null;
 		}
-		s.close();
+		zatvoriSesiju(s);
 		return trazeni;
 	}
 	public static List<Grupa> grupeTrenera(String imeIPrezime){
@@ -75,27 +90,27 @@ public class HibernateSetup {
 			return null;
 		}
 		List<Grupa> traz=s.createCriteria(Grupa.class).add(Restrictions.eq("trener", izBaze)).list();
+		zatvoriSesiju(s);
 		return traz;
 	}
-	
+
 	public static boolean dodajGrupu(Grupa nova){
 		Session s=novaSesija();
 		try{
-			s.beginTransaction();
 			s.save(nova);
-			s.getTransaction().commit();
 		}
 		catch(Exception e){
 			return false;
 		}
 		finally{
-			s.close();
+			zatvoriSesiju(s);
 		}
 		return true;
 	}
 	public static Grupa[] sveGrupe(){
 		Session s=novaSesija();
 		List<Grupa> sve=s.createCriteria(Grupa.class).list();
+		zatvoriSesiju(s);
 		return sve.toArray(new Grupa[]{});
 	}
 	public static void close(){
