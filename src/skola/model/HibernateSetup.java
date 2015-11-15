@@ -21,7 +21,8 @@ public class HibernateSetup {
 		conf.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		conf.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		File tren=new File(".");
-		String putanja=tren.getAbsoluteFile().getParent()+File.separator+"nova";
+		String userDir=System.getProperty("user.home");
+		String putanja=userDir+File.separator+"Feniks Basket"+File.separator+"nova";
 		conf.setProperty("hibernate.connection.url", "jdbc:h2:"+putanja);
 		conf.setProperty("hibernate.connection.username", "ognjen");
 		conf.setProperty("hibernate.connection.password", "");
