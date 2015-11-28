@@ -1,6 +1,8 @@
 package skola.model;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -120,6 +122,18 @@ public class HibernateSetup {
 		List<Clan> svi=s.createCriteria(Clan.class).list();
 		zatvoriSesiju(s);
 		return svi.toArray(new Clan[]{});
+	}
+	public static Clan[] danasnjiRodjendan(){
+		Clan[] svi=sviClanovi();
+		Calendar k=Calendar.getInstance();
+		List<Clan> danasnjiRodj=new ArrayList<Clan>();
+		for(Clan c : svi){
+			Calendar rod=Calendar.getInstance();
+			rod.setTime(c.getDatumRodjenja());
+			if(rod.get(Calendar.DATE)==k.get(Calendar.DATE) && rod.get(Calendar.MONTH)==k.get(Calendar.MONTH))
+				danasnjiRodj.add(c);
+		}
+		return danasnjiRodj.toArray(new Clan[]{});
 	}
 	public static void close(){
 		if(sessionFactory!=null)

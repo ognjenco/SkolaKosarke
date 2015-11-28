@@ -38,6 +38,7 @@ public class PocetniController implements EventHandler<ActionEvent> {
     @FXML
     private VBox citavPanel;
 
+    private ScrollPane spp;
 
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -45,16 +46,16 @@ public class PocetniController implements EventHandler<ActionEvent> {
         assert rodjendani != null : "fx:id=\"rodjendani\" was not injected: check your FXML file 'izgledPocetni.fxml'.";
         assert citavPanel != null : "fx:id=\"citavPanel\" was not injected: check your FXML file 'izgledPocetni.fxml'.";
 
-        Clan[] treneri=HibernateSetup.sviClanovi();
+        Clan[] rodj=HibernateSetup.danasnjiRodjendan();
         StringBuilder sb=new StringBuilder();
-        for(Clan tr : treneri){
+        for(Clan tr : rodj){
         	sb.append(tr.toString()+System.lineSeparator());
         }
         rodjendani.setText(sb.toString());
         FXMLLoader lo=new FXMLLoader();
         VBox p=lo.load(this.getClass().getClassLoader().getResourceAsStream("dugmad.fxml"));
         p.setFillWidth(true);
-        ScrollPane spp=new ScrollPane(p);
+        spp=new ScrollPane(p);
         spp.setFitToWidth(true);
         citavPanel.getChildren().add(spp);
         for(Node n : p.getChildren()){
@@ -73,8 +74,27 @@ public class PocetniController implements EventHandler<ActionEvent> {
 		citavPanel.getChildren().remove(citavPanel.getChildren().size()-1);
 		Button src=(Button)event.getSource();
 		if(src.getText().equals("Treneri")){
-			Label l=new Label("Treneri");
-			citavPanel.getChildren().add(l);
+			FXMLLoader lo=new FXMLLoader(this.getClass().getClassLoader().getResource("treneri.fxml"));
+			lo.setController(new TreneriKontroler());
+			VBox tren=null;
+			try {
+				tren=(VBox)lo.load();
+				tren.setFillWidth(true);
+				((TreneriKontroler)lo.getController()).getNazad().setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent event) {
+						// TODO Auto-generated method stub
+						citavPanel.getChildren().remove(citavPanel.getChildren().size()-1);
+						citavPanel.getChildren().add(spp);
+					}
+				});
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(tren!=null)
+				citavPanel.getChildren().add(tren);
 		}
 	}
 }
