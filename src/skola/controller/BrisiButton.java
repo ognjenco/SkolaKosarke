@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.css.PseudoClass;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Skin;
 import javafx.scene.control.TableCell;
 import skola.model.Trener;
@@ -22,6 +23,7 @@ public class BrisiButton extends TableCell<Trener, Boolean> {
 		super.updateItem(item, empty);
 		if(!empty){
 			setGraphic(dugme);
+			setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 		}
 	}
 

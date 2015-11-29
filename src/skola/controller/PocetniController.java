@@ -56,6 +56,7 @@ public class PocetniController implements EventHandler<ActionEvent> {
         VBox p=lo.load(this.getClass().getClassLoader().getResourceAsStream("dugmad.fxml"));
         p.setFillWidth(true);
         spp=new ScrollPane(p);
+        spp.setFitToHeight(true);
         spp.setFitToWidth(true);
         citavPanel.getChildren().add(spp);
         for(Node n : p.getChildren()){
@@ -93,8 +94,12 @@ public class PocetniController implements EventHandler<ActionEvent> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(tren!=null)
-				citavPanel.getChildren().add(tren);
+			if(tren!=null){
+				ScrollPane sp=new ScrollPane(tren);
+				sp.setFitToWidth(true);
+				sp.setFitToHeight(true);
+				citavPanel.getChildren().add(sp);
+			}
 		}
 	}
 }

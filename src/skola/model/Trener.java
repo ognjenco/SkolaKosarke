@@ -26,7 +26,7 @@ public class Trener {
 	private List<Grupa> grupe ;
 	@Column
 	private String brojTelefona;
-	
+
 	public Trener(){
 		grupe=new ArrayList<Grupa>();
 	}
@@ -57,7 +57,7 @@ public class Trener {
 	private void setGrupe(List<Grupa> grupe) {
 		this.grupe = grupe;
 	}
-	
+
 	public void dodajGrupu(Grupa nova){
 		getGrupe().add(nova);
 		nova.setTrener(this);
@@ -76,6 +76,14 @@ public class Trener {
 		return "Trener [id=" + id + ", imeIPrezime=" + imeIPrezime
 				+ ", brojTelefona=" + brojTelefona + "]";
 	}
-	
-	
+
+	public String getGrupeString(){
+		StringBuffer sb=new StringBuffer();
+		for(Grupa a : getGrupe()){
+			sb.append(a.getNaziv()+"    ");
+		}
+		return sb.toString();
+	}
+
+
 }

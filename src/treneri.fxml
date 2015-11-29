@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.embed.swing.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="tabela" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0">
-        <columns>
-          <TableColumn fx:id="imeKolona" prefWidth="210.0" text="Ime i prezime" />
-          <TableColumn fx:id="telefonKolona" minWidth="0.0" prefWidth="139.0" text="Broj telefona" />
-            <TableColumn fx:id="grupeKolona" prefWidth="178.0" text="Grupe" />
-            <TableColumn fx:id="brisiKolona" prefWidth="72.0" text="Brisanje" />
-        </columns>
-      </TableView>
+      <SwingNode fx:id="swingNode" />
       <HBox fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
          <children>
             <Button fx:id="nazad" mnemonicParsing="false" text="Nazad" />
